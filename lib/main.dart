@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:love_sing_app/pages/Home.dart';
-import 'package:love_sing_app/pages/Login.dart';
-import 'package:love_sing_app/theme.dart';
+import 'package:forest_music_app/pages/home/home_page.dart';
+import 'package:forest_music_app/pages/login/login_page.dart';
+import 'package:forest_music_app/theme.dart';
 
 void main() {
   runApp(const ForestMusic());
@@ -19,8 +19,8 @@ class ForestMusic extends StatelessWidget {
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Home(),
-        '/Login': (context) => const Login()
+        '/': (context) => const HomePage(),
+        '/Login': (context) => const LoginPage()
       },
     );
   }

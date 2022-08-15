@@ -1,4 +1,4 @@
-package com.boop.love_sing_app
+package com.boop.forest_music_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.boop.love_sing_app">
+    package="com.boop.forest_music_app">
 
     <application
-        android:label="love_sing_app"
+        android:label="forest_music_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
