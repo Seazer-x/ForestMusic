@@ -13,16 +13,16 @@ class NotificationArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
+    return Scaffold(
+        body: Stack(
+      children: [
         Container(
           width: screenSize.width,
           height: 240,
           decoration: BoxDecoration(
               color: primary.shade400,
-              borderRadius: const BorderRadius.only(
-                  // bottomLeft: Radius.circular(100),
-                  bottomRight: Radius.circular(100))),
+              borderRadius:
+                  const BorderRadius.only(bottomRight: Radius.circular(100))),
           child: Container(
               padding: const EdgeInsets.only(
                   top: 80, bottom: 19, left: 25, right: 25),
@@ -75,7 +75,7 @@ class NotificationArea extends StatelessWidget {
                                 width: 38,
                                 height: 38,
                                 image: AssetImage("lib/assets/images/bg3.png"),
-                              ))
+                              )),
                         ],
                       )
                     ],
@@ -89,6 +89,6 @@ class NotificationArea extends StatelessWidget {
                 image: const AssetImage('lib/assets/images/bg1.png'),
                 color: Colors.white.withOpacity(0.03)))
       ],
-    );
+    ));
   }
 }
