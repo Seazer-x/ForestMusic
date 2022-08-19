@@ -13,9 +13,8 @@ class NotificationArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: [
+    return Stack(
+      children: <Widget>[
         Container(
           width: screenSize.width,
           height: 240,
@@ -34,6 +33,7 @@ class NotificationArea extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             "晚上好,",
@@ -41,9 +41,6 @@ class NotificationArea extends StatelessWidget {
                               color: Colors.white.withOpacity(0.5),
                               fontSize: 16,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
                           ),
                           const Text(
                             "Seazer",
@@ -56,25 +53,30 @@ class NotificationArea extends StatelessWidget {
                       ),
                       const Spacer(),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesomeIcons.solidBell,
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              FontAwesomeIcons.solidBell,
+                              size: 22,
+                            ),
                             color: Colors.white,
-                            size: 20.0,
+                            padding: const EdgeInsets.only(left: 15),
                           ),
                           const SizedBox(
-                            width: 18,
+                            width: 15,
                           ),
                           Container(
                               width: 38,
                               height: 38,
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(19)),
+                                  borderRadius: BorderRadius.circular(20)),
                               child: const Image(
                                 width: 38,
                                 height: 38,
-                                image: AssetImage("lib/assets/images/bg3.png"),
+                                image: AssetImage("assets/images/bg3.png"),
                               )),
                         ],
                       )
@@ -84,11 +86,12 @@ class NotificationArea extends StatelessWidget {
         Positioned(
             top: 10,
             left: 0,
-            width: screenSize.width,
             child: Image(
-                image: const AssetImage('lib/assets/images/bg1.png'),
+                width: screenSize.width,
+                height: 240,
+                image: const AssetImage('assets/images/bg1.png'),
                 color: Colors.white.withOpacity(0.03)))
       ],
-    ));
+    );
   }
 }
