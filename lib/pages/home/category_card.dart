@@ -17,12 +17,13 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 15, top: 2),
       width: 140,
       height: 220,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(
             color: Colors.black38,
-            blurRadius: 4,
+            blurRadius: 3,
             offset: Offset(3, 4), // Shadow position
           ),
         ],
@@ -44,9 +45,9 @@ class CategoryCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         decoration: TextDecoration.none,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                   Text(

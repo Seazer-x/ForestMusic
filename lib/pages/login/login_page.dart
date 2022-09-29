@@ -22,11 +22,10 @@ class _LoginState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         color: lightColorScheme.primary,
         padding: const EdgeInsets.only(top: 200),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         child: Container(
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -35,16 +34,17 @@ class _LoginState extends State<LoginPage> with TickerProviderStateMixin {
           child: Column(
             children: <Widget>[
               TabBar(
+                  indicatorColor: primary,
                   controller: _tabController,
-                  labelColor: lightColorScheme.surfaceTint,
+                  labelColor: lightColorScheme.primary,
                   unselectedLabelColor: lightColorScheme.outline,
                   tabs: const <Widget>[Tab(text: "登录"), Tab(text: "注册")]),
               Expanded(
                   child: TabBarView(
                       controller: _tabController,
                       children: const <Widget>[
-                    LoginForm(),
-                    Center(child: Text("登录"))
+                    SingleChildScrollView(child: LoginForm()),
+                    SingleChildScrollView(child: Center(child: Text("登录")))
                   ]))
             ],
           ),

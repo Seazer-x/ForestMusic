@@ -1,22 +1,41 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:forest_music_app/model/user.dart';
 
 import '../../theme.dart';
 
 class NotificationArea extends StatelessWidget {
+  final User user;
   const NotificationArea({
     Key? key,
-    required this.screenSize,
+    required this.user,
   }) : super(key: key);
-
-  final Size screenSize;
 
   @override
   Widget build(BuildContext context) {
+    String greet = "";
+    greeting() {
+      var hour = DateTime.now().hour;
+      if (kDebugMode) {
+        print(hour);
+      }
+      if (hour < 11) {
+        greet = '早上好!';
+      } else if (hour >= 11 && hour <= 12) {
+        greet = '中午好!';
+      } else if (hour < 17) {
+        greet = '下午好!';
+      } else {
+        greet = '晚上好!';
+      }
+    }
+
+    greeting();
+
     return Stack(
       children: <Widget>[
         Container(
-          width: screenSize.width,
+          width: MediaQuery.of(context).size.width,
           height: 240,
           decoration: BoxDecoration(
               color: primary.shade400,
@@ -26,7 +45,7 @@ class NotificationArea extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 80, bottom: 19, left: 25, right: 25),
               child: SizedBox(
-                  width: screenSize.width,
+                  width: MediaQuery.of(context).size.width,
                   height: 80,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -36,15 +55,15 @@ class NotificationArea extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "晚上好,",
+                            greet,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.5),
-                              fontSize: 16,
+                              fontSize: 17,
                             ),
                           ),
-                          const Text(
-                            "Seazer",
-                            style: TextStyle(
+                          Text(
+                            user.nickname,
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
@@ -55,29 +74,17 @@ class NotificationArea extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              FontAwesomeIcons.solidBell,
-                              size: 22,
-                            ),
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(left: 15),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
                           Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: const Image(
-                                width: 38,
-                                height: 38,
-                                image: AssetImage("assets/images/bg3.png"),
-                              )),
+                            padding: const EdgeInsets.only(left: 2),
+                            height: 50,
+                            width: 50,
+                            child: ClipOval(
+                                child: Image.network(
+                              user.avatar,
+                              width: 60,
+                              height: 60,
+                            )),
+                          ),
                         ],
                       )
                     ],
@@ -87,7 +94,7 @@ class NotificationArea extends StatelessWidget {
             top: 10,
             left: 0,
             child: Image(
-                width: screenSize.width,
+                width: MediaQuery.of(context).size.width,
                 height: 240,
                 image: const AssetImage('assets/images/bg1.png'),
                 color: Colors.white.withOpacity(0.03)))

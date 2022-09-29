@@ -15,6 +15,18 @@ const MaterialColor primary = MaterialColor(
     900: Color(0xFF09422B),
   },
 );
+
+const Color primaryTextColor = Color(0xFF046036);
+
+const Color buttonColor = Color(0xffedfaed);
+
+const Color secondaryTextColor = Color(0xFF7A869A);
+
+const TextStyle primaryText = TextStyle(fontSize: 17, color: Color(0xFF046036));
+
+const TextStyle secondaryText =
+    TextStyle(fontSize: 13, color: Color(0xFF7A869A));
+
 const int _grennPrimary = 0xFF006D3C;
 
 const lightColorScheme = ColorScheme(
