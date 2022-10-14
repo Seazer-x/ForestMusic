@@ -1,13 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:forest_music_app/api/playlist.dart';
 import 'package:forest_music_app/model/playlist.dart';
 import 'package:forest_music_app/theme.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../model/music.dart';
 import '../../widgets/music_ver.dart';
@@ -15,8 +17,8 @@ import '../../widgets/vertical_scrollable.dart';
 import '../playlist/header.dart';
 
 class PlayListDetail extends StatefulWidget {
-  const PlayListDetail({Key? key}) : super(key: key);
-
+  final AudioPlayer player;
+  const PlayListDetail({Key? key, required this.player}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _PlayListDetailState();
 }
@@ -24,11 +26,7 @@ class PlayListDetail extends StatefulWidget {
 class _PlayListDetailState extends State<PlayListDetail> {
   late Future<Playlist> futurePlayList;
   late List<Music> musicList;
-  late bool _playing = false;
-  late bool _pausing = false;
-  final player = AudioPlayer();
-  int audioIndex = 0;
-  int seconds = 0;
+  late int musicIndex = 0;
 
   @override
   void initState() {
@@ -38,15 +36,18 @@ class _PlayListDetailState extends State<PlayListDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final player = widget.player;
     return Scaffold(
         appBar: AppBar(
           leading: Builder(builder: (BuildContext context) {
             return IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: const Icon(FontAwesomeIcons.angleLeft),
               onPressed: () {
                 Navigator.pop(context);
               },
-              tooltip: "返回",
+              tooltip: "",
             );
           }),
         ),
@@ -56,25 +57,6 @@ class _PlayListDetailState extends State<PlayListDetail> {
               if (snapshot.hasData) {
                 Playlist playlist = snapshot.data!;
                 musicList = playlist.musicList;
-                final musicality = ConcatenatingAudioSource(
-                    useLazyPreparation: true,
-                    // Customise the shuffle algorithm
-                    shuffleOrder: DefaultShuffleOrder(),
-                    // Specify the playlist items
-                    children: musicList
-                        .map((e) => AudioSource.uri(
-                              Uri.parse(e.url),
-                              tag: MediaItem(
-                                // Specify a unique ID for each media item:
-                                id: e.id,
-                                // Metadata to display in the notification:
-                                album: "Album name",
-                                title: e.name,
-                                artUri: Uri.parse(e.cover),
-                              ),
-                            ))
-                        .toList());
-                player.setAudioSource(musicality);
                 return SingleChildScrollView(
                   child: Stack(
                     children: <Widget>[
@@ -94,61 +76,60 @@ class _PlayListDetailState extends State<PlayListDetail> {
                                 PrimaryButton(
                                     width: 221,
                                     press: () async {
-                                      Timer.periodic(const Duration(seconds: 1),
-                                          (timer) {
-                                        if (_pausing) {
-                                          return;
-                                        }
-                                        seconds++;
-                                      });
-                                      if (!_playing) {
-                                        setState(() {
-                                          if (audioIndex !=
-                                              player.currentIndex) {
-                                            audioIndex = player.currentIndex!;
-                                            seconds = 0;
-                                          }
-                                        });
-                                        if (_pausing) {
-                                          if (kDebugMode) {
-                                            print(seconds);
-                                          }
-                                          await player.play();
-                                          await player.seek(
-                                              Duration(seconds: seconds),
-                                              index: audioIndex);
-                                        } else {
-                                          player.play();
-                                        }
-                                        setState(() {
-                                          _pausing = false;
-                                          _playing = true;
-                                        });
-                                      } else {
-                                        await player.pause();
-                                        setState(() {
-                                          _pausing = true;
-                                          _playing = false;
-                                        });
-                                      }
+                                      await player.play(
+                                          UrlSource(musicList[musicIndex].url));
+                                      await player.seek(
+                                          const Duration(milliseconds: 0));
                                     },
-                                    child: Row(children: [
-                                      const SizedBox(width: 55),
-                                      Icon(
-                                          _playing
-                                              ? FontAwesomeIcons.circlePause
-                                              : FontAwesomeIcons.circlePlay,
+                                    child: Row(children: const [
+                                      SizedBox(width: 55),
+                                      Icon(FontAwesomeIcons.circlePlay,
                                           size: 30),
-                                      const SizedBox(width: 20),
-                                      Text(_playing ? "Pause" : "Play",
-                                          style: const TextStyle(
+                                      SizedBox(width: 20),
+                                      Text("Play",
+                                          style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold))
                                     ])),
                                 const SizedBox(width: 10),
                                 PrimaryButton(
                                     color: const Color(0xFFF0F4F8),
-                                    press: () {},
+                                    press: () async {
+                                      /// 获取app文件地址
+                                      Directory? storageDir =
+                                          await getApplicationSupportDirectory();
+                                      String? storagePath = storageDir.path;
+                                      String filepath;
+                                      for (var e in musicList) {
+                                        filepath =
+                                            "$storagePath/music${e.url.substring(e.url.lastIndexOf("/"))}";
+                                        File file = File(filepath);
+                                        if (!await file.exists()) {
+                                          await file.create(recursive: true);
+                                        }
+                                        if (!file.existsSync()) {
+                                          file.createSync();
+                                        }
+                                        try {
+                                          await Dio().download(e.url, filepath,
+                                              onReceiveProgress:
+                                                  (num received, num total) {
+                                            /// 获取下载进度
+                                            double process = double.parse(
+                                                (received / total)
+                                                    .toStringAsFixed(2));
+                                            if (kDebugMode) {
+                                              print(process);
+                                            }
+                                          });
+                                        } on DioError catch (e) {
+                                          if (kDebugMode) {
+                                            print(
+                                                "response.statusCode: ${e.type}");
+                                          }
+                                        }
+                                      }
+                                    },
                                     child: const Icon(
                                         FontAwesomeIcons.cloudArrowDown,
                                         size: 22))

@@ -22,10 +22,10 @@ const Color buttonColor = Color(0xffedfaed);
 
 const Color secondaryTextColor = Color(0xFF7A869A);
 
-const TextStyle primaryText = TextStyle(fontSize: 17, color: Color(0xFF046036));
+const TextStyle primaryText = TextStyle(fontSize: 15, color: Color(0xFF046036));
 
 const TextStyle secondaryText =
-    TextStyle(fontSize: 13, color: Color(0xFF7A869A));
+    TextStyle(fontSize: 12, color: Color(0xFF7A869A));
 
 const int _grennPrimary = 0xFF006D3C;
 
@@ -70,7 +70,7 @@ const darkColorScheme = ColorScheme(
   secondary: Color(0xFFB6CCB9),
   onSecondary: Color(0xFF223527),
   secondaryContainer: Color(0xFF384B3D),
-  onSecondaryContainer: Color(0xFFD2E8D4),
+  onSecondaryContainer: Color(0xFF5D605D),
   tertiary: Color(0xFFA2CDDA),
   onTertiary: Color(0xFF023640),
   tertiaryContainer: Color(0xFF214C57),
@@ -80,14 +80,14 @@ const darkColorScheme = ColorScheme(
   onError: Color(0xFF690005),
   onErrorContainer: Color(0xFFFFDAD6),
   background: Color(0xFF191C19),
-  onBackground: Color(0xFFE1E3DE),
+  onBackground: Color(0xFFA7DA59),
   surface: Color(0xFF191C19),
   onSurface: Color(0xFFE1E3DE),
   surfaceVariant: Color(0xFF414942),
   onSurfaceVariant: Color(0xFFC0C9BF),
   outline: Color(0xFF8B938A),
   onInverseSurface: Color(0xFF191C19),
-  inverseSurface: Color(0xFFE1E3DE),
+  inverseSurface: Color(0xFF5F605D),
   inversePrimary: Color(0xFF006D3C),
   shadow: Color(0xFF000000),
   surfaceTint: Color(0xFF7CDA9C),

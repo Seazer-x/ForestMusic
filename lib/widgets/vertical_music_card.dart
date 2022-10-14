@@ -16,49 +16,29 @@ class VerticalMusicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Stack(
+        margin: const EdgeInsets.only(bottom: 20),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                width: 64,
-                height: 64,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(64))),
-                child: Image.network(cover),
-              ),
-              Positioned(
-                  top: 24,
-                  left: 34,
-                  child: Container(
-                    width: 16,
-                    height: 16,
+              Stack(children: <Widget>[
+                Container(
+                    width: 64,
+                    height: 64,
+                    clipBehavior: Clip.hardEdge,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                  ))
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.only(right: 15),
-            margin: const EdgeInsets.only(left: 9),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(name, style: primaryText),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text("$album - $artist", style: secondaryText)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                        borderRadius: BorderRadius.all(Radius.circular(64))),
+                    child: Image.network(cover))
+              ]),
+              Container(
+                  padding: const EdgeInsets.only(right: 15),
+                  margin: const EdgeInsets.only(left: 9),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(name, style: primaryText),
+                        const SizedBox(height: 5),
+                        Text("$album - $artist", style: secondaryText)
+                      ]))
+            ]));
   }
 }

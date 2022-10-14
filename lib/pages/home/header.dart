@@ -1,27 +1,28 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:forest_music_app/pages/home/notification.dart';
 
-import '../../model/user.dart';
 import 'category_banner.dart';
 
 class Header extends StatelessWidget {
-  final User user;
+  final AudioPlayer player;
   const Header({
     Key? key,
-    required this.user,
+    required this.player,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 370,
+      height: 290,
       child: Stack(
         children: <Widget>[
-          NotificationArea(user: user),
-          Column(
-            children: const <Widget>[SizedBox(height: 140), CategoryBanner()],
-          )
+          const NotificationArea(),
+          Column(children: <Widget>[
+            const SizedBox(height: 130),
+            CategoryBanner(player: player)
+          ])
         ],
       ),
     );

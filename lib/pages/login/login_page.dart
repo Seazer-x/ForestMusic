@@ -1,10 +1,12 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:forest_music_app/pages/login/login_form.dart';
 
 import '../../theme.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final AudioPlayer player;
+  const LoginPage({Key? key, required this.player}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginState();
@@ -40,12 +42,11 @@ class _LoginState extends State<LoginPage> with TickerProviderStateMixin {
                   unselectedLabelColor: lightColorScheme.outline,
                   tabs: const <Widget>[Tab(text: "登录"), Tab(text: "注册")]),
               Expanded(
-                  child: TabBarView(
-                      controller: _tabController,
-                      children: const <Widget>[
-                    SingleChildScrollView(child: LoginForm()),
-                    SingleChildScrollView(child: Center(child: Text("登录")))
-                  ]))
+                  child:
+                      TabBarView(controller: _tabController, children: <Widget>[
+                SingleChildScrollView(child: LoginForm(player: widget.player)),
+                const SingleChildScrollView(child: Center(child: Text("登录")))
+              ]))
             ],
           ),
         ),

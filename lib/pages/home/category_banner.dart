@@ -1,19 +1,19 @@
-import 'package:flutter/foundation.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:forest_music_app/pages/playlist/detail_page.dart';
 
 import 'category_card.dart';
 
 class CategoryBanner extends StatelessWidget {
-  const CategoryBanner({Key? key}) : super(key: key);
+  final AudioPlayer player;
+  const CategoryBanner({Key? key, required this.player}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 20, bottom: 7),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
+        padding: const EdgeInsets.only(left: 20, bottom: 10),
+        scrollDirection: Axis.horizontal,
+        child: Row(children: <Widget>[
           CategoryCard(
             title: '嘻哈',
             description: '1.4万播放量',
@@ -21,7 +21,8 @@ class CategoryBanner extends StatelessWidget {
             onPress: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PlayListDetail()),
+                MaterialPageRoute(
+                    builder: (context) => PlayListDetail(player: player)),
               );
             },
           ),
@@ -41,8 +42,6 @@ class CategoryBanner extends StatelessWidget {
               Navigator.pushNamed(context, '/playlist/detail');
             },
           )
-        ],
-      ),
-    );
+        ]));
   }
 }

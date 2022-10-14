@@ -9,7 +9,7 @@ class HorizontalScrollable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 10, bottom: 7),
+      padding: const EdgeInsets.only(left: 10, bottom: 10),
       scrollDirection: Axis.horizontal,
       child: Row(children: children),
     );

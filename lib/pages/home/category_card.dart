@@ -15,8 +15,8 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 15, top: 2),
-      width: 140,
-      height: 220,
+      width: 100,
+      height: 100,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -45,7 +45,7 @@ class CategoryCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 15,
                         decoration: TextDecoration.none,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
